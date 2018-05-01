@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 import argparse
-import configparser
 import logging
 import pprint
 
@@ -28,8 +27,7 @@ def main():
         print(f'{i}. {station["name"]}')
 
     choice = int(input("Choice: "))
-    print(stations[choice]["name"])
-    print(stations[choice]["id"])
+    l.info(f'Added station id {stations[choice]["id"]} to config')
     config['stations'].append({
         'name': stations[choice]['name'],
         'id': stations[choice]['id']

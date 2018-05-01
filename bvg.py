@@ -15,10 +15,6 @@ XIdentifier = "https://github.com/benediktkr/bvg"
 API = "https://2.vbb.transport.rest"
 CONFIGFILE="bvg.ini"
 
-parser = argparse.ArgumentParser(description='Search for BVG station')
-parser.add_argument("--debug", action="store_true", help="Print full JSON")
-args = parser.parse_args()
-
 logging.basicConfig(
     format='%(asctime)s - %(levelname)s - %(name)s - %(message)s',
     datefmt="%Y-%m-%d %H:%M:%S",
@@ -72,9 +68,12 @@ def main():
         departures = get_station_departures(station["id"])
         #pprint([a['delay'] for a in departures])
         for departure in departures:
-            if args.debug:
-                pprint(departure)
-            line = departure['line']['name'].rjust(8)
+            line = departure['line']['name']
+            if line not in config['lines']:
+                continue
+
+            line = line.rjust(8)
+            
             direction = trim_station(departure['direction']).ljust(33)
 
             # Other interesting fields:
@@ -88,7 +87,7 @@ def main():
                 status = "Cancelled"
             else:
 
-                delay = int(departure['delay']) # seconds
+                delay = int(departure['delay'] or 0) # seconds
                 # Naively cutting the timezone off the string
                 when = dateparse(departure['when'][:-6])
                 if when > datetime.now():

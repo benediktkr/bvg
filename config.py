@@ -6,7 +6,8 @@ import logging
 CONFIGFILE = "config.json"
 
 TEMPLATE = {
-    'stations': []
+    'stations': [],
+    'lines': [],
 }
 
 ## MORALE WILL IMPROVE
