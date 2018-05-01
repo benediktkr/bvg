@@ -3,6 +3,8 @@
 import json
 import logging
 
+l = logging.getLogger(__name__)
+
 CONFIGFILE = "config.json"
 
 TEMPLATE = {
@@ -15,14 +17,15 @@ TEMPLATE = {
 class Config(object):
     def __init__(self, json):
         self._json = json
-        
+
     @classmethod
     def get(cls):
         try:
             with open(CONFIGFILE, 'r') as f:
+                l.info(f'using config file: {CONFIGFILE}')
                 return cls(json.loads(f.read()))
         except FileNotFoundError as e:
-            logging.warning("creating new config file")
+            l.warning(f'creating new config file: {CONFIGFILE}')
             return cls(TEMPLATE)
 
     def __getitem__(self, key):

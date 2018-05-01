@@ -15,7 +15,6 @@ args = parser.parse_args()
 l = logging.getLogger(__name__)
 
 def main():
-    l.info("Using config: {}".format(bvg.CONFIGFILE))
     config['lines'].extend(args.lines)
     l.info(f'Added {args.lines} to config')
     config.save()

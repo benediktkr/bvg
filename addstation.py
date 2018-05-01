@@ -16,7 +16,6 @@ args = parser.parse_args()
 l = logging.getLogger(__name__)
 
 def main():
-    l.info("Using config: {}".format(bvg.CONFIGFILE))
     if not args.searchterm:
         searchterm = input("Search for station: ")
     else:
