@@ -22,7 +22,7 @@ if __name__ == "__main__":
 
     stations = bvg.search_station(searchterm, args.fuzzy)
     for (i, station) in enumerate(stations):
-        print("{}. {}".format(i, station['name']))
+        print(f'{i}. {station["name"]}')
 
     choice = int(input("Choice: "))
     print(stations[choice]["name"])
