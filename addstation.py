@@ -3,6 +3,7 @@
 import argparse
 import logging
 import pprint
+import sys
 
 import bvg
 from config import config
@@ -22,6 +23,9 @@ def main():
         searchterm = args.searchterm
 
     stations = bvg.search_station(searchterm, args.fuzzy)
+    if not stations:
+        l.warning("No stations found")
+        sys.exit(1)
     for (i, station) in enumerate(stations):
         print(f'{i}. {station["name"]}')
 
