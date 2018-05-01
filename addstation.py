@@ -10,11 +10,14 @@ from config import config
 
 parser = argparse.ArgumentParser(description='Search for BVG station')
 parser.add_argument("searchterm", type=str, default="", help="Station name", nargs="?")
-parser.add_argument("fuzzy", action="store_true", help="Use fuzzy search")
+parser.add_argument("--fuzzy", action="store_true", help="Use fuzzy search")
+parser.add_argument("--debug", action="store_true", help="Print full JSON")
 args = parser.parse_args()
 
-if __name__ == "__main__":
-    logging.info("Using config: {}".format(bvg.CONFIGFILE))
+l = logging.getLogger(__name__)
+
+def main():
+    l.info("Using config: {}".format(bvg.CONFIGFILE))
     if not args.searchterm:
         searchterm = input("Search for station: ")
     else:
@@ -32,6 +35,9 @@ if __name__ == "__main__":
         'id': stations[choice]['id']
     })
 
+    if args.debug:
+        pprint.pprint(stations[choice])
     config.save()
 
-
+if __name__ == "__main__":
+    main()
