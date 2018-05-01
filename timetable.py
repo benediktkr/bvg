@@ -33,8 +33,9 @@ def trim_line(line):
 
 def main():
     for station in config['stations']:
-        print(f' - {station["name"]}')
         departures = bvg.get_station_departures(station["id"])
+        count = len(departures)
+        print(f' - {station["name"]} ({count} departures)')
         #pprint([a['delay'] for a in departures])
         for departure in departures:
             line = departure['line']['name']
@@ -70,7 +71,7 @@ def main():
                     if args.debug:
                         pprint(departure)
                     print(f'  {line} | {direction} | {status}')
-
+        print()
 
 if __name__ == "__main__":
     main()
